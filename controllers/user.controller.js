@@ -104,7 +104,7 @@ module.exports = {
 
   async getAllUsers(req, res, next) {
     try {
-      const data = await User.getAllUsers();
+      const data = await User.getAll();
       // console.log(`Usuarios obtenidos: ${JSON.stringify(data)}`);
       return res.status(201).json(data);
     } catch (error) {
