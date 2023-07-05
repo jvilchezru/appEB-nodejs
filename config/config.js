@@ -1,20 +1,14 @@
-const promise = require('bluebird');
-const options = { promiseLib: promise, query: (e) => {} };
+const mysql = require('promise-mysql');
 
-const pgp = require('pg-promise')(options);
-const types = pgp.pg.types;
-types.setTypeParser(1114, function (stringValue) {
-  return stringValue;
+const connection = mysql.createConnection({
+  host: process.env.MYSQL_HOST,
+  user: process.env.MYSQL_USER,
+  password: process.env.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DATABASE
 });
 
-const databaseConfig = {
-  'host': '127.0.0.1',
-  'port': '5432',
-  'database': 'db_expandbusiness',
-  'user': 'postgres',
-  'password': 'jvilchezru'
+const getConnection = () => {
+  return connection;
 };
 
-const db = pgp(databaseConfig);
-
-module.exports = db;
+module.exports = { getConnection };

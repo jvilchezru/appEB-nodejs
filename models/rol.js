@@ -1,23 +1,22 @@
-const db = require('../config/config');
+const { getConnection } = require('../config/config');
 
 const Rol = {};
 
-Rol.create = (user_id, rol_id) => {
-	const sql = `
+Rol.create = async (user_id, rol_id) => {
+  const sql = `
         INSERT INTO eb_user_roles(
             user_id, rol_id, created_at, updated_at
         ) VALUES (
-            $1, $2, $3, $4
+            ?, ?, ?, ?
         )
     `;
 
-	return db.none(sql, [
-		user_id,
-		rol_id,
-		new Date(),
-		new Date()
-	]);
-}
+  const params = [user_id, rol_id, new Date(), new Date()];
+
+  const db = await getConnection();
+  const data = await db.query(sql, params);
+
+  return data;
+};
 
 module.exports = Rol;
-
