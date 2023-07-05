@@ -17,7 +17,7 @@ module.exports = (app, upload) => {
   app.get('/api/users/getPersonByDocument/:document', UserController.getPersonByDocument);
   app.get(
     '/api/users/findUserById/:id',
-    passport.authenticate('jwt', { session: false }),
+    // passport.authenticate('jwt', { session: false }),
     UserController.findUserById
   );
   // POST

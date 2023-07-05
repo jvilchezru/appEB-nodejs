@@ -105,7 +105,6 @@ module.exports = {
   async getAllUsers(req, res, next) {
     try {
       const data = await User.getAll();
-      // console.log(`Usuarios obtenidos: ${JSON.stringify(data)}`);
       return res.status(201).json(data);
     } catch (error) {
       console.log(`Error: ${error}`);
@@ -146,7 +145,7 @@ module.exports = {
     try {
       const id = req.params.id;
       const data = await User.findUserById(id);
-      console.log(`Usuario obtenido: ${JSON.stringify(data)}`);
+      // console.log(`Usuario obtenido: ${JSON.stringify(data)}`);
       return res.status(201).json(data);
     } catch (error) {
       console.log(`Error: ${error}`);
