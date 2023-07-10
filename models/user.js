@@ -7,7 +7,6 @@ const User = {};
 User.create = async (user) => {
   const myPasswordHashed = crypto.createHash('md5').update(user.password).digest('hex');
   user.password = myPasswordHashed;
-
   const sql = `
   				INSERT INTO eb_users(
 						user_type,
@@ -25,7 +24,6 @@ User.create = async (user) => {
 						?, ?, ?, ?, ?, ?, ?, ?, ?, ?
 					);
 			`;
-
   const params = [
     user.user_type,
     user.document_number,
@@ -38,10 +36,9 @@ User.create = async (user) => {
     new Date(),
     new Date()
   ];
-
   const db = await getConnection();
-  const data = db.query(sql, params);
-
+  const data = await db.query(sql, params);
+  db.end();
   return data;
 };
 
@@ -49,10 +46,10 @@ User.getAll = async () => {
   const sql = `
 			SELECT * FROM eb_users
 	`;
-
   const db = await getConnection();
-
-  return db.query(sql);
+  const data = await db.query(sql);
+  db.end();
+  return data;
 };
 
 User.findById = async (id, callback) => {
@@ -73,11 +70,11 @@ User.findById = async (id, callback) => {
         WHERE
           user_id = ?
 			`;
-
   const db = await getConnection();
-  const data = db.query(sql, id).then((user) => {
+  const data = await db.query(sql, id).then((user) => {
     callback(null, user);
   });
+  db.end();
   return data;
 };
 
@@ -125,14 +122,12 @@ User.findUserById = async (id) => {
 				WHERE
 					U.user_id = ${id}
 			`;
-
   const db = await getConnection();
   const data = await db.query(sql);
-
+  db.end();
   if (data.length == 0) {
     return null;
   }
-
   data[0].roles = JSON.parse(data[0].roles);
   return data[0];
 };
@@ -181,10 +176,9 @@ User.findByDocumentNumber = async (document_number) => {
 				WHERE
 					U.document_number = ${document_number}
 			`;
-
   const db = await getConnection();
   const data = await db.query(sql);
-
+  db.end();
   if (data.length == 0) {
     return null;
   }
@@ -201,10 +195,9 @@ User.disable = async (user_id) => {
         WHERE
           user_id = ?
     `;
-
   const db = await getConnection();
   const data = await db.query(sql, user_id);
-
+  db.end();
   return data;
 };
 
@@ -217,10 +210,9 @@ User.enable = async (user_id) => {
         WHERE
           user_id = ?
     `;
-
   const db = await getConnection();
   const data = await db.query(sql, user_id);
-
+  db.end();
   return data;
 };
 
@@ -237,7 +229,6 @@ User.update = async (user) => {
         WHERE
           user_id = ?
     `;
-
   const params = [
     user.address,
     user.phone,
@@ -246,10 +237,9 @@ User.update = async (user) => {
     new Date(),
     user.user_id
   ];
-
   const db = await getConnection();
   const data = await db.query(sql, params);
-
+  db.end();
   return data;
 };
 
@@ -262,20 +252,17 @@ User.updateToken = async (user_id, token) => {
         WHERE
           user_id = ?
     `;
-
   const params = [token, user_id];
   const db = await getConnection();
-
+  db.end();
   return db.query(sql, params);
 };
 
 User.isPasswordMatched = (userPassword, hash) => {
   const myPasswordHashed = crypto.createHash('md5').update(userPassword).digest('hex');
-
   if (myPasswordHashed === hash) {
     return true;
   }
-
   return false;
 };
 
