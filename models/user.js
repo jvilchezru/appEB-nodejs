@@ -47,7 +47,7 @@ User.getAll = async () => {
 			SELECT * FROM eb_users
 	`;
   const db = await getConnection();
-  const data = await db.query(sql);
+  const data = db.query(sql);
   db.end();
   return data;
 };
