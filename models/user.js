@@ -4,6 +4,18 @@ const axios = require('axios');
 
 const User = {};
 
+User.getAll = async () => {
+  const sql = `
+			SELECT * FROM eb_users
+	`;
+  const db = await getConnection();
+  try {
+    const data = await db.query(sql);
+    return data;
+  } finally {
+    db.end();
+  }
+};
 User.create = async (user) => {
   const myPasswordHashed = crypto.createHash('md5').update(user.password).digest('hex');
   user.password = myPasswordHashed;
@@ -38,16 +50,6 @@ User.create = async (user) => {
   ];
   const db = await getConnection();
   const data = await db.query(sql, params);
-  db.end();
-  return data;
-};
-
-User.getAll = async () => {
-  const sql = `
-			SELECT * FROM eb_users
-	`;
-  const db = await getConnection();
-  const data = db.query(sql);
   db.end();
   return data;
 };
