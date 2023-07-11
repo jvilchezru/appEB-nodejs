@@ -1,4 +1,4 @@
-const { getConnection } = require('../config/config');
+const pool = require('../config/config');
 
 const Rol = {};
 
@@ -13,9 +13,7 @@ Rol.create = async (user_id, rol_id) => {
 
   const params = [user_id, rol_id, new Date(), new Date()];
 
-  const db = await getConnection();
-  const data = await db.query(sql, params);
-
+  const data = pool.query(sql, params);
   return data;
 };
 
