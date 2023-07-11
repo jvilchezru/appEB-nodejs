@@ -1,5 +1,4 @@
 const pool = require('../config/config');
-
 const Category = {};
 
 Category.create = async (category) => {
@@ -45,18 +44,18 @@ Category.update = async (category) => {
     new Date(),
     category.category_id
   ];
-  const db = await getConnection();
-  return db.query(sql, params);
+  const data = pool.query(sql, params);
+  return data;
 };
 
 Category.delete = async (category_id) => {
   const sql = `
 			    DELETE FROM eb_categories
           WHERE
-            category_id = ?
+            category_id = ${category_id}
 	    `;
-  const db = await getConnection();
-  return db.query(sql, category_id);
+  const data = pool.query(sql);
+  return data;
 };
 
 Category.findByName = async (category_name) => {
@@ -64,10 +63,9 @@ Category.findByName = async (category_name) => {
         SELECT * FROM
           eb_categories
         WHERE
-          category_name LIKE ?
+          category_name LIKE %${category_name}%
     `;
-  const db = await getConnection();
-  const data = await db.query(sql, `%${category_name}%`);
+  const data = pool.query(sql);
   return data;
 };
 
