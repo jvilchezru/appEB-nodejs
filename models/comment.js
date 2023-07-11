@@ -1,5 +1,4 @@
-const { getConnection } = require('../config/config');
-
+const pool = require('../config/config');
 const Comment = {};
 
 Comment.create = async (comment) => {
@@ -18,8 +17,7 @@ Comment.create = async (comment) => {
     new Date(),
     new Date()
   ];
-  const db = await getConnection();
-  const data = await db.query(sql, params);
+  const data = pool.query(sql, params);
   return data;
 };
 
@@ -65,8 +63,7 @@ Comment.findByUserAndService = async (user_id, service_id) => {
             C.comment_id, C.user_id, C.service_id
         `;
   const params = [user_id, service_id];
-  const db = await getConnection();
-  const data = await db.query(sql, params);
+  const data = pool.query(sql, params);
   return data;
 };
 
@@ -112,8 +109,7 @@ Comment.findByService = async (user_id, service_id) => {
             C.comment_id, C.user_id, C.service_id
         `;
   const params = [user_id, service_id];
-  const db = await getConnection();
-  const data = await db.query(sql, params);
+  const data = pool.query(sql, params);
   return data;
 };
 
@@ -138,8 +134,8 @@ Comment.update = async (comment) => {
     new Date(),
     comment.comment_id
   ];
-  const db = await getConnection();
-  return db.query(sql, params);
+  const data = pool.query(sql, params);
+  return data;
 };
 
 Comment.delete = async (comment_id) => {
@@ -148,8 +144,8 @@ Comment.delete = async (comment_id) => {
           WHERE
             comment_id = ?
 	    `;
-  const db = await getConnection();
-  return db.query(sql, comment_id);
+  const data = pool.query(sql, [comment_id]);
+  return data;
 };
 
 module.exports = Comment;
