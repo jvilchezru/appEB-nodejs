@@ -1,4 +1,4 @@
-const { getConnection } = require('../config/config');
+const pool = require('../config/config');
 
 const Category = {};
 
@@ -16,8 +16,7 @@ Category.create = async (category) => {
     new Date(),
     new Date()
   ];
-  const db = await getConnection();
-  const data = await db.query(sql, params);
+  const data = pool.query(sql, params);
   return data;
 };
 
@@ -25,8 +24,8 @@ Category.getAll = async () => {
   const sql = `
 			  SELECT * FROM eb_categories
 	    `;
-  const db = await getConnection();
-  return db.query(sql);
+  const data = pool.query(sql);
+  return data;
 };
 
 Category.update = async (category) => {

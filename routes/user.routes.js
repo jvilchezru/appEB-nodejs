@@ -6,8 +6,8 @@ module.exports = (app, upload) => {
   app.get('/api/users/getAll', UserController.getAll);
   app.get('/api/users/findByDocument/:document', UserController.findByDocument);
   app.get(
-    '/api/users/findUserById/:id',
-    // passport.authenticate('jwt', { session: false }),
+    '/api/users/findById/:id',
+    passport.authenticate('jwt', { session: false }),
     UserController.findUserById
   );
   app.get(

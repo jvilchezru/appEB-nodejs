@@ -20,21 +20,4 @@ pool.getConnection((err, connection) => {
 });
 
 pool.query = util.promisify(pool.query);
-
 module.exports = pool;
-// const connection = mysql.createConnection({
-//   host: process.env.DB_HOST,
-//   user: process.env.DB_USERNAME,
-//   password: process.env.DB_PASSWORD,
-//   database: process.env.DB_DBNAME
-// });
-
-// const query = util.promisify(connection.query).bind(connection);
-// const connect = util.promisify(connection.connect).bind(connection);
-// const end = util.promisify(connection.end).bind(connection);
-
-// module.exports = {
-//   query,
-//   connect,
-//   end
-// };
