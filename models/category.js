@@ -63,9 +63,9 @@ Category.findByName = async (category_name) => {
         SELECT * FROM
           eb_categories
         WHERE
-          category_name LIKE %${category_name}%
+          category_name LIKE ?
     `;
-  const data = pool.query(sql);
+  const data = pool.query(sql, [`%${category_name}%`]);
   return data;
 };
 
