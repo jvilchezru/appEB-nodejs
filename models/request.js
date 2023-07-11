@@ -19,8 +19,7 @@ Request.create = async (request) => {
     new Date(),
     new Date()
   ];
-  const db = await getConnection();
-  const data = await db.query(sql, params);
+  const data = pool.query(sql, params);
   return data;
 };
 
@@ -77,8 +76,7 @@ Request.findByUserAndStatus = async (user_id, status) => {
             R.created_at
         `;
   const params = [user_id, status];
-  const db = await getConnection();
-  const data = await db.query(sql, params);
+  const data = pool.query(sql, params);
   return data;
 };
 
@@ -134,8 +132,7 @@ Request.findByStatus = async (status) => {
           ORDER BY
             R.created_at
         `;
-  const db = await getConnection();
-  const data = await db.query(sql, status);
+  const data = pool.query(sql, params);
   return data;
 };
 
@@ -158,18 +155,18 @@ Request.update = async (request) => {
     new Date(),
     request.request_id
   ];
-  const db = await getConnection();
-  return db.query(sql, params);
+  const data = pool.query(sql, params);
+  return data;
 };
 
 Request.delete = async (request_id) => {
   const sql = `
 			    DELETE FROM eb_requests
           WHERE
-            request_id = ?
+            request_id = ${request_id}
 	    `;
-  const db = await getConnection();
-  return db.query(sql, request_id);
+  const data = pool.query(sql);
+  return data;
 };
 
 module.exports = Request;
