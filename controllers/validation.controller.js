@@ -63,6 +63,7 @@ module.exports = {
       const user_id = req.params.user_id;
       const status = req.params.status;
       const data = await Validation.findByUserAndStatus(user_id, status);
+      console.log(data.length);
       for (const d of data) {
         d.client = JSON.parse(d.client);
       }
