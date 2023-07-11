@@ -1,5 +1,4 @@
-const { getConnection } = require('../config/config');
-
+const pool = require('../config/config');
 const Service = {};
 
 Service.create = async (service) => {
@@ -25,8 +24,7 @@ Service.create = async (service) => {
     new Date(),
     new Date()
   ];
-  const db = await getConnection();
-  const data = await db.query(sql, params);
+  const data = pool.query(sql, params);
   return data;
 };
 
@@ -48,8 +46,7 @@ Service.findByCategory = async (category_id) => {
         WHERE
           C.category_id = ?
     `;
-  const db = await getConnection();
-  const data = await db.query(sql, category_id);
+  const data = pool.query(sql, [category_id]);
   return data;
 };
 
@@ -78,9 +75,7 @@ Service.update = async (service) => {
     service.service_id
   ];
 
-  const db = await getConnection();
-  const data = await db.query(sql, params);
-
+  const data = pool.query(sql, params);
   return data;
 };
 
@@ -90,16 +85,16 @@ Service.delete = async (service_id) => {
           WHERE
             service_id = ?
 	    `;
-  const db = await getConnection();
-  return db.query(sql, service_id);
+  const data = pool.query(sql, [service_id]);
+  return data;
 };
 
 Service.getAll = async () => {
   const sql = `
 			  SELECT * FROM eb_services
 	    `;
-  const db = await getConnection();
-  return db.query(sql);
+  const data = pool.query(sql);
+  return data;
 };
 
 Service.findByName = async (service_name) => {
@@ -109,8 +104,7 @@ Service.findByName = async (service_name) => {
         WHERE
           service_name LIKE ?
     `;
-  const db = await getConnection();
-  const data = await db.query(sql, `%${service_name}%`);
+  const data = pool.query(sql, [`%${service_name}%`]);
   return data;
 };
 
@@ -132,9 +126,8 @@ Service.findByCategoryAndName = async (category_id, service_name) => {
         WHERE
           C.category_id = ? AND service_name LIKE ?
     `;
-  const db = await getConnection();
   const params = [category_id, `%${service_name}%`];
-  const data = await db.query(sql, params);
+  const data = pool.query(sql, params);
   return data;
 };
 
