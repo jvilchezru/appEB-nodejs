@@ -1,5 +1,4 @@
-const { getConnection } = require('../config/config');
-
+const pool = require('../config/config');
 const Validation = {};
 
 Validation.create = async (validation) => {
@@ -19,8 +18,7 @@ Validation.create = async (validation) => {
     new Date(),
     new Date()
   ];
-  const db = await getConnection();
-  const data = await db.query(sql, params);
+  const data = pool.query(sql, params);
   return data;
 };
 
@@ -57,8 +55,7 @@ Validation.findByUserAndStatus = async (user_id, status) => {
             V.created_at
         `;
   const params = [user_id, status];
-  const db = await getConnection();
-  const data = await db.query(sql, params);
+  const data = pool.query(sql, params);
   return data;
 };
 
@@ -94,8 +91,7 @@ Validation.findByStatus = async (status) => {
           ORDER BY
             V.created_at
         `;
-  const db = await getConnection();
-  const data = await db.query(sql, status);
+  const data = pool.query(sql, [status]);
   return data;
 };
 
@@ -116,8 +112,8 @@ Validation.update = async (validation) => {
     new Date(),
     validation.validation_id
   ];
-  const db = await getConnection();
-  return db.query(sql, params);
+  const data = pool.query(sql, params);
+  return data;
 };
 
 Validation.delete = async (validation_id) => {
@@ -126,8 +122,8 @@ Validation.delete = async (validation_id) => {
           WHERE
           validation_id = ?
 	    `;
-  const db = await getConnection();
-  return db.query(sql, validation_id);
+  const data = pool.query(sql, [validation_id]);
+  return data;
 };
 
 module.exports = Validation;

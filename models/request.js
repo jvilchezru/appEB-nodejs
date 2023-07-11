@@ -1,5 +1,4 @@
-const { getConnection } = require('../config/config');
-
+const pool = require('../config/config');
 const Request = {};
 
 Request.create = async (request) => {
@@ -132,7 +131,7 @@ Request.findByStatus = async (status) => {
           ORDER BY
             R.created_at
         `;
-  const data = pool.query(sql, params);
+  const data = pool.query(sql, [status]);
   return data;
 };
 
@@ -163,9 +162,9 @@ Request.delete = async (request_id) => {
   const sql = `
 			    DELETE FROM eb_requests
           WHERE
-            request_id = ${request_id}
+            request_id = ?
 	    `;
-  const data = pool.query(sql);
+  const data = pool.query(sql, [request_id]);
   return data;
 };
 
