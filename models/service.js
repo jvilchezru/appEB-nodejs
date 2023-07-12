@@ -15,6 +15,7 @@ Service.create = async (service) => {
 					)
 				VALUES (?, ?, ?, ?, ?, ?, ?)
     	`;
+
   const params = [
     service.service_name,
     service.service_description,
@@ -24,6 +25,7 @@ Service.create = async (service) => {
     new Date(),
     new Date()
   ];
+
   const data = pool.query(sql, params);
   return data;
 };
@@ -46,6 +48,7 @@ Service.findByCategory = async (category_id) => {
         WHERE
           C.category_id = ?
     `;
+
   const data = pool.query(sql, [category_id]);
   return data;
 };
@@ -85,6 +88,7 @@ Service.delete = async (service_id) => {
           WHERE
             service_id = ?
 	    `;
+
   const data = pool.query(sql, [service_id]);
   return data;
 };
@@ -93,6 +97,7 @@ Service.getAll = async () => {
   const sql = `
 			  SELECT * FROM eb_services
 	    `;
+
   const data = pool.query(sql);
   return data;
 };
@@ -104,6 +109,7 @@ Service.findByName = async (service_name) => {
         WHERE
           service_name LIKE ?
     `;
+
   const data = pool.query(sql, [`%${service_name}%`]);
   return data;
 };
@@ -126,7 +132,9 @@ Service.findByCategoryAndName = async (category_id, service_name) => {
         WHERE
           C.category_id = ? AND service_name LIKE ?
     `;
+
   const params = [category_id, `%${service_name}%`];
+
   const data = pool.query(sql, params);
   return data;
 };

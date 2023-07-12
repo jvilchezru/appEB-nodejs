@@ -9,6 +9,7 @@ Validation.create = async (validation) => {
 					)
 				VALUES (?, ?, ?, ?, ?, ?, ?)
     	`;
+
   const params = [
     validation.owner_name,
     validation.folio_number,
@@ -18,6 +19,7 @@ Validation.create = async (validation) => {
     new Date(),
     new Date()
   ];
+
   const data = pool.query(sql, params);
   return data;
 };
@@ -55,6 +57,7 @@ Validation.findByUserAndStatus = async (user_id, status) => {
             V.created_at
         `;
   const params = [user_id, status];
+
   const data = pool.query(sql, params);
   return data;
 };
@@ -91,6 +94,7 @@ Validation.findByStatus = async (status) => {
           ORDER BY
             V.created_at
         `;
+
   const data = pool.query(sql, [status]);
   return data;
 };
@@ -106,12 +110,14 @@ Validation.update = async (validation) => {
           WHERE
             validation_id = ?
 	    `;
+
   const params = [
     validation.user_id,
     validation.status,
     new Date(),
     validation.validation_id
   ];
+
   const data = pool.query(sql, params);
   return data;
 };
@@ -122,6 +128,7 @@ Validation.delete = async (validation_id) => {
           WHERE
           validation_id = ?
 	    `;
+
   const data = pool.query(sql, [validation_id]);
   return data;
 };

@@ -1,7 +1,6 @@
 const pool = require('../config/config');
 const crypto = require('crypto');
 const axios = require('axios');
-
 const User = {};
 
 User.create = async (user) => {
@@ -15,6 +14,7 @@ User.create = async (user) => {
           ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
         );
     `;
+
   const params = [
     user.user_type,
     user.document_number,
@@ -27,12 +27,14 @@ User.create = async (user) => {
     new Date(),
     new Date()
   ];
+
   const data = pool.query(sql, params);
   return data;
 };
 
 User.getAll = async () => {
   const sql = 'SELECT * FROM eb_users';
+
   const data = pool.query(sql);
   return data;
 };
@@ -79,9 +81,10 @@ User.findByDocument = async (document_number) => {
 				FROM
 					eb_users AS U
 				WHERE
-					U.document_number = ${document_number}
+					U.document_number = ?
 			`;
-  const data = pool.query(sql);
+
+  const data = pool.query(sql, [document_number]);
   return data;
 };
 
@@ -127,9 +130,10 @@ User.findUserById = async (id) => {
 				FROM
 					eb_users AS U
 				WHERE
-					U.user_id = ${id}
+					U.user_id = ?
 			`;
-  const data = pool.query(sql);
+
+  const data = pool.query(sql, [id]);
   return data;
 };
 
@@ -151,6 +155,7 @@ User.findById = async (id, callback) => {
         WHERE
           user_id = ?
 			`;
+
   const data = await pool.query(sql, id).then((user) => {
     callback(null, user);
   });
@@ -164,9 +169,10 @@ User.disable = async (user_id) => {
         SET
           is_available = 0
         WHERE
-          user_id = ${user_id}
+          user_id = ?
     `;
-  const data = pool.query(sql);
+
+  const data = pool.query(sql, user_id);
   return data;
 };
 
@@ -177,9 +183,10 @@ User.enable = async (user_id) => {
         SET
           is_available = 1
         WHERE
-          user_id = ${user_id}
+          user_id = ?
     `;
-  const data = pool.query(sql);
+
+  const data = pool.query(sql, [user_id]);
   return data;
 };
 
@@ -196,6 +203,7 @@ User.update = async (user) => {
         WHERE
           user_id = ?
     `;
+
   const params = [
     user.address,
     user.phone,
@@ -204,6 +212,7 @@ User.update = async (user) => {
     new Date(),
     user.user_id
   ];
+
   const data = pool.query(sql, params);
   return data;
 };
@@ -217,7 +226,9 @@ User.updateToken = async (user_id, token) => {
         WHERE
           user_id = ?
     `;
+
   const params = [token, user_id];
+
   const data = pool.query(sql, params);
   return data;
 };

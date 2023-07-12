@@ -9,12 +9,14 @@ Category.create = async (category) => {
 					)
 				VALUES (?, ?, ?, ?)
     	`;
+
   const params = [
     category.category_name,
     category.category_description,
     new Date(),
     new Date()
   ];
+
   const data = pool.query(sql, params);
   return data;
 };
@@ -23,6 +25,7 @@ Category.getAll = async () => {
   const sql = `
 			  SELECT * FROM eb_categories
 	    `;
+
   const data = pool.query(sql);
   return data;
 };
@@ -38,23 +41,27 @@ Category.update = async (category) => {
           WHERE
             category_id = ?
 	    `;
+
   const params = [
     category.category_name,
     category.category_description,
     new Date(),
     category.category_id
   ];
+
   const data = pool.query(sql, params);
   return data;
 };
 
 Category.delete = async (category_id) => {
   const sql = `
-			    DELETE FROM eb_categories
+			    DELETE FROM
+            eb_categories
           WHERE
-            category_id = ${category_id}
+            category_id = ?
 	    `;
-  const data = pool.query(sql);
+
+  const data = pool.query(sql, [category_id]);
   return data;
 };
 
@@ -65,6 +72,7 @@ Category.findByName = async (category_name) => {
         WHERE
           category_name LIKE ?
     `;
+
   const data = pool.query(sql, [`%${category_name}%`]);
   return data;
 };

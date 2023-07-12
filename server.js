@@ -70,10 +70,6 @@ app.get('/', (req, res) => {
   res.send('Ruta raíz');
 });
 
-app.get('/test', (req, res) => {
-  res.send('Ruta test');
-});
-
 // ERROR HANDLER
 app.use((err, req, res, next) => {
   console.log(err);

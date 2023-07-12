@@ -9,6 +9,7 @@ Comment.create = async (comment) => {
 					)
 				VALUES (?, ?, ?, ?, ?, ?)
     	`;
+
   const params = [
     comment.comment,
     comment.rating,
@@ -17,6 +18,7 @@ Comment.create = async (comment) => {
     new Date(),
     new Date()
   ];
+
   const data = pool.query(sql, params);
   return data;
 };
@@ -62,7 +64,9 @@ Comment.findByUserAndService = async (user_id, service_id) => {
           GROUP BY
             C.comment_id, C.user_id, C.service_id
         `;
+
   const params = [user_id, service_id];
+
   const data = pool.query(sql, params);
   return data;
 };
@@ -108,7 +112,9 @@ Comment.findByService = async (user_id, service_id) => {
           GROUP BY
             C.comment_id, C.user_id, C.service_id
         `;
+
   const params = [user_id, service_id];
+
   const data = pool.query(sql, params);
   return data;
 };
@@ -126,6 +132,7 @@ Comment.update = async (comment) => {
           WHERE
             comment_id = ?
 	    `;
+
   const params = [
     comment.comment,
     comment.rating,
@@ -134,6 +141,7 @@ Comment.update = async (comment) => {
     new Date(),
     comment.comment_id
   ];
+
   const data = pool.query(sql, params);
   return data;
 };
@@ -144,6 +152,7 @@ Comment.delete = async (comment_id) => {
           WHERE
             comment_id = ?
 	    `;
+
   const data = pool.query(sql, [comment_id]);
   return data;
 };

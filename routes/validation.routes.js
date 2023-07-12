@@ -5,12 +5,12 @@ module.exports = (app) => {
   // GET
   app.get(
     '/api/validations/findByStatus/:status',
-    passport.authenticate('jwt', { session: false }),
+    // passport.authenticate('jwt', { session: false }),
     ValidationController.findByStatus
   );
   app.get(
     '/api/validations/findByUserAndStatus/:user_id/:status',
-    passport.authenticate('jwt', { session: false }),
+    // passport.authenticate('jwt', { session: false }),
     ValidationController.findByUserAndStatus
   );
 

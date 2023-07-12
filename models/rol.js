@@ -1,5 +1,4 @@
 const pool = require('../config/config');
-
 const Rol = {};
 
 Rol.create = async (user_id, rol_id) => {

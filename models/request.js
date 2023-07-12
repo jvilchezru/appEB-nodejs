@@ -8,7 +8,8 @@ Request.create = async (request) => {
 						economy_activity, workers_number, status, service_id, user_id, created_at, updated_at
 					)
 				VALUES (?, ?, ?, ?, ?, ?, ?)
-    	`;
+      `;
+
   const params = [
     request.economy_activity,
     request.workers_number,
@@ -18,6 +19,7 @@ Request.create = async (request) => {
     new Date(),
     new Date()
   ];
+
   const data = pool.query(sql, params);
   return data;
 };
@@ -74,7 +76,9 @@ Request.findByUserAndStatus = async (user_id, status) => {
           ORDER BY
             R.created_at
         `;
+
   const params = [user_id, status];
+
   const data = pool.query(sql, params);
   return data;
 };
@@ -131,6 +135,7 @@ Request.findByStatus = async (status) => {
           ORDER BY
             R.created_at
         `;
+
   const data = pool.query(sql, [status]);
   return data;
 };
@@ -147,6 +152,7 @@ Request.update = async (request) => {
           WHERE
             request_id = ?
 	    `;
+
   const params = [
     request.user_id,
     request.service_id,
@@ -154,16 +160,19 @@ Request.update = async (request) => {
     new Date(),
     request.request_id
   ];
+
   const data = pool.query(sql, params);
   return data;
 };
 
 Request.delete = async (request_id) => {
   const sql = `
-			    DELETE FROM eb_requests
+			    DELETE FROM
+            eb_requests
           WHERE
             request_id = ?
 	    `;
+
   const data = pool.query(sql, [request_id]);
   return data;
 };
