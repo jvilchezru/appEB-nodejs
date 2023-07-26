@@ -35,7 +35,7 @@ module.exports = {
       if (isNotValid) {
         return res.status(401).json({
           success: false,
-          message: `¡El número de documento no es válido!`
+          message: `El número de documento no es válido`
         });
       }
       const [myUser] = await User.findByDocument(document);
@@ -43,7 +43,7 @@ module.exports = {
         myUser.roles = JSON.parse(myUser.roles);
         return res.status(401).json({
           success: false,
-          message: `¡El número de documento ya se encuentra registrado!`,
+          message: `El número de documento ya se encuentra registrado`,
           data: myUser
         });
       }
@@ -95,7 +95,7 @@ module.exports = {
       await Rol.create(data.insertId, 2); // ROL POR DEFECTO - CLIENTE
       return res.status(201).json({
         success: true,
-        message: 'Registro exitoso',
+        message: 'Se ha registrado correctamente. Ahora inicie sesión',
         data: data.insertId
       });
     } catch (error) {
@@ -123,17 +123,9 @@ module.exports = {
       await User.update(user);
       return res.status(201).json({
         success: true,
-        message: '¡Los datos fueron actualizados correctamente!'
+        message: 'Sus datos han sido actualizados'
       });
     } catch (error) {
-      console.log(`Error: ${error}`);
-      if (error.code === 'ECONNRESET') {
-        // Manejar el error de conexión aquí
-        return res.status(500).json({
-          success: false,
-          message: 'Error de conexión a la base de datos'
-        });
-      }
       return res.status(501).json({
         success: false,
         message: 'Error al actualizar los datos',
@@ -176,7 +168,7 @@ module.exports = {
       if (!myUser) {
         return res.status(401).json({
           success: false,
-          message: '¡El usuario no se encuentra registrado!'
+          message: 'El usuario no se encuentra registrado'
         });
       } else {
         myUser.roles = JSON.parse(myUser.roles);
@@ -184,7 +176,7 @@ module.exports = {
       if (myUser.is_available == 0) {
         return res.status(401).json({
           success: false,
-          message: '¡El usuario ha sido deshabilitado. No puede iniciar sesión!'
+          message: 'El usuario se encuentra deshabilitado'
         });
       }
       if (User.isPasswordMatched(password, myUser.password)) {
@@ -214,12 +206,12 @@ module.exports = {
         return res.status(200).json({
           success: true,
           data: data,
-          message: '¡Inicio de sesión exitoso!'
+          message: 'Inicio de sesión exitoso'
         });
       } else {
         return res.status(401).json({
           success: false,
-          message: '¡La contraseña es incorrecta!'
+          message: 'La contraseña es incorrecta'
         });
       }
     } catch (error) {

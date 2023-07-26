@@ -32,7 +32,7 @@ module.exports = {
             if (inserts == files.length) {
               return res.status(201).json({
                 success: true,
-                message: 'El servicio se registró correctamente'
+                message: 'El servicio ha sido creado'
               });
             }
           });
@@ -73,7 +73,7 @@ module.exports = {
           if (inserts == files.length) {
             return res.status(201).json({
               success: true,
-              message: 'El servicio se actualizó correctamente'
+              message: 'Los datos del servicio han sido actualizados'
             });
           }
         });
@@ -103,7 +103,7 @@ module.exports = {
       console.log(JSON.stringify(data));
       return res.status(201).json({
         success: true,
-        message: 'El servicio se ha eliminado correctamente'
+        message: 'El servicio ha sido eliminado'
       });
     } catch (error) {
       console.log(`Error: ${error}`);

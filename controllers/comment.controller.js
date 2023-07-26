@@ -7,7 +7,7 @@ module.exports = {
       const data = await Comment.create(comment);
       return res.status(201).json({
         success: true,
-        message: 'El comentario se publicó correctamente',
+        message: 'Su comentario ha sido publicado',
         data: data.insertId
       });
     } catch (error) {
@@ -26,14 +26,14 @@ module.exports = {
       const data = await Comment.update(comment);
       return res.status(201).json({
         success: true,
-        message: 'Ha editado su comentario',
+        message: 'Su comentario ha sido actualziado',
         data: data.insertId
       });
     } catch (error) {
       console.log(`Error: ${error}`);
       return res.status(501).json({
         success: false,
-        message: 'Error al editar',
+        message: 'Error al actualizar comentario',
         error: error
       });
     }
@@ -45,7 +45,7 @@ module.exports = {
       await Comment.delete(comment_id);
       return res.status(201).json({
         success: true,
-        message: 'El comentario se ha eliminado correctamente'
+        message: 'Su comentario ha sido eliminado'
       });
     } catch (error) {
       return res.status(501).json({
@@ -55,24 +55,6 @@ module.exports = {
     }
   },
 
-  // async findRequestsByStatus(req, res, next) {
-  //   try {
-  //     const status = req.params.status;
-  //     const data = await Request.findByStatus(status);
-  //     for (const d of data) {
-  //       d.client = JSON.parse(d.client);
-  //       d.service = JSON.parse(d.service);
-  //       d.category = JSON.parse(d.category);
-  //     }
-  //     return res.status(201).json(data);
-  //   } catch (error) {
-  //     return res.status(501).json({
-  //       success: false,
-  //       message: `Error al listar las solicitudes por estado: ${error}`,
-  //       error: error
-  //     });
-  //   }
-  // },
   async findByService(req, res, next) {
     try {
       const user_id = req.params.user_id;
@@ -110,52 +92,4 @@ module.exports = {
       });
     }
   }
-
-  // async updateCategory(req, res, next) {
-  //   try {
-  //     const category = req.body;
-  //     await Category.update(category);
-  //     return res.status(201).json({
-  //       success: true,
-  //       message: 'Los datos de la categoría se han actualizado correctamente'
-  //     });
-  //   } catch (error) {
-  //     console.log(`Error: ${error}`);
-  //     return res.status(501).json({
-  //       success: false,
-  //       message: 'Error al actualizar categoría'
-  //     });
-  //   }
-  // },
-
-  // async deleteCategory(req, res, next) {
-  //   try {
-  //     const category_id = req.params.category_id;
-  //     const data = await Category.delete(category_id);
-  //     console.log(JSON.stringify(data));
-  //     return res.status(201).json({
-  //       success: true,
-  //       message: 'La categoría se ha eliminado correctamente'
-  //     });
-  //   } catch (error) {
-  //     console.log(`Error: ${error}`);
-  //     return res.status(501).json({
-  //       success: false,
-  //       message: 'Error al eliminar categoría'
-  //     });
-  //   }
-  // },
-
-  // async getAllCategories(req, res, next) {
-  //   try {
-  //     const data = await Category.getAll();
-  //     return res.status(201).json(data);
-  //   } catch (error) {
-  //     console.log(`Error: ${error}`);
-  //     return res.status(501).json({
-  //       success: false,
-  //       message: 'Error al obtener las categorías'
-  //     });
-  //   }
-  // }
 };

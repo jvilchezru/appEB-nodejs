@@ -8,7 +8,7 @@ module.exports = {
       const data = await Validation.create(validation);
       return res.status(201).json({
         success: true,
-        message: 'La solictud se ha enviado correctamente',
+        message: 'La solictud ha sido enviada',
         data: data.insertId
       });
     } catch (error) {
@@ -28,7 +28,7 @@ module.exports = {
       const data = await Validation.update(validation);
       return res.status(201).json({
         success: true,
-        message: 'La solictud se actualizó correctamente',
+        message: 'La solictud ha sido atendida y respondida',
         data: data.insertId
       });
     } catch (error) {

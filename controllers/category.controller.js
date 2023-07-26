@@ -7,7 +7,7 @@ module.exports = {
       const data = await Category.create(category);
       return res.status(201).json({
         success: true,
-        message: 'La categoría se registró correctamente',
+        message: 'La categoría ha sido creada',
         data: data.insertId
       });
     } catch (error) {
@@ -26,7 +26,7 @@ module.exports = {
       await Category.update(category);
       return res.status(201).json({
         success: true,
-        message: 'Los datos de la categoría se han actualizado correctamente'
+        message: 'Los datos de la categoría han sido actualizados'
       });
     } catch (error) {
       console.log(`Error: ${error}`);
@@ -44,7 +44,7 @@ module.exports = {
       console.log(JSON.stringify(data));
       return res.status(201).json({
         success: true,
-        message: 'La categoría se ha eliminado correctamente'
+        message: 'La categoría se ha eliminado'
       });
     } catch (error) {
       console.log(`Error: ${error}`);
