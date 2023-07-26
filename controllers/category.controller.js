@@ -44,7 +44,7 @@ module.exports = {
       console.log(JSON.stringify(data));
       return res.status(201).json({
         success: true,
-        message: 'La categoría se ha eliminado'
+        message: 'La categoría ha sido eliminada'
       });
     } catch (error) {
       console.log(`Error: ${error}`);

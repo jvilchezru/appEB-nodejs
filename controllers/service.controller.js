@@ -84,7 +84,7 @@ module.exports = {
         await Service.update(service);
         return res.status(201).json({
           success: true,
-          message: 'El servicio se actualizó correctamente'
+          message: 'Los datos del servicio han sido actualizados'
         });
       }
     } catch (error) {

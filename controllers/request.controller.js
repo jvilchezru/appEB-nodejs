@@ -86,7 +86,7 @@ module.exports = {
       await Request.delete(request_id);
       return res.status(201).json({
         success: true,
-        message: 'La solicitud se canceló correctamente'
+        message: 'La solicitud ha sido cancelada'
       });
     } catch (error) {
       console.log(`Error: ${error}`);

@@ -206,7 +206,7 @@ module.exports = {
         return res.status(200).json({
           success: true,
           data: data,
-          message: 'Inicio de sesión exitoso'
+          message: 'Bienvenido(a) a la app de Expand Business'
         });
       } else {
         return res.status(401).json({
