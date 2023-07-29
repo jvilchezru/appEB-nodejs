@@ -13,7 +13,7 @@ Service.create = async (service) => {
             created_at,
             updated_at
 					)
-				VALUES (?, ?, ?, ?, ?, ?, ?)
+				VALUES (?, ?, ?, ?, ?, NOW(), NOW())
     	`;
 
   const params = [
@@ -21,9 +21,7 @@ Service.create = async (service) => {
     service.service_description,
     service.service_image1,
     service.service_image2,
-    service.category_id,
-    new Date(),
-    new Date()
+    service.category_id
   ];
 
   const data = pool.query(sql, params);
@@ -63,7 +61,7 @@ Service.update = async (service) => {
           service_image1 = ?,
           service_image2 = ?,
           category_id = ?,
-          updated_at = ?
+          updated_at = NOW()
         WHERE
           service_id = ?
     `;
@@ -74,7 +72,6 @@ Service.update = async (service) => {
     service.service_image1,
     service.service_image2,
     service.category_id,
-    new Date(),
     service.service_id
   ];
 

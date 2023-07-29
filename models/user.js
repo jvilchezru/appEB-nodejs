@@ -11,7 +11,7 @@ User.create = async (user) => {
           user_type, document_number, user_name, address, phone, email, password, user_image, created_at, updated_at
         )
         VALUES(
-          ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+          ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW()
         );
     `;
 
@@ -23,9 +23,7 @@ User.create = async (user) => {
     user.phone,
     user.email,
     user.password,
-    user.user_image,
-    new Date(),
-    new Date()
+    user.user_image
   ];
 
   const data = pool.query(sql, params);
@@ -199,19 +197,12 @@ User.update = async (user) => {
           phone = ?,
           email = ?,
 					user_image = ?,
-          updated_at = ?
+          updated_at = NOW()
         WHERE
           user_id = ?
     `;
 
-  const params = [
-    user.address,
-    user.phone,
-    user.email,
-    user.user_image,
-    new Date(),
-    user.user_id
-  ];
+  const params = [user.address, user.phone, user.email, user.user_image, user.user_id];
 
   const data = pool.query(sql, params);
   return data;

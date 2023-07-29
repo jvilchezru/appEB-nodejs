@@ -7,17 +7,10 @@ Comment.create = async (comment) => {
 					eb_comments (
 						comment, rating, service_id, user_id, created_at, updated_at
 					)
-				VALUES (?, ?, ?, ?, ?, ?)
+				VALUES (?, ?, ?, ?, NOW(), NOW())
     	`;
 
-  const params = [
-    comment.comment,
-    comment.rating,
-    comment.service_id,
-    comment.user_id,
-    new Date(),
-    new Date()
-  ];
+  const params = [comment.comment, comment.rating, comment.service_id, comment.user_id];
 
   const data = pool.query(sql, params);
   return data;
@@ -128,7 +121,7 @@ Comment.update = async (comment) => {
             rating = ?,
             user_id = ?,
             service_id = ?,
-            updated_at = ?
+            updated_at = NOW()
           WHERE
             comment_id = ?
 	    `;
@@ -138,7 +131,6 @@ Comment.update = async (comment) => {
     comment.rating,
     comment.user_id,
     comment.service_id,
-    new Date(),
     comment.comment_id
   ];
 

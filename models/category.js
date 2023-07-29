@@ -7,15 +7,10 @@ Category.create = async (category) => {
 					eb_categories (
 						category_name, category_description, created_at, updated_at
 					)
-				VALUES (?, ?, ?, ?)
+				VALUES (?, ?, NOW(), NOW())
     	`;
 
-  const params = [
-    category.category_name,
-    category.category_description,
-    new Date(),
-    new Date()
-  ];
+  const params = [category.category_name, category.category_description];
 
   const data = pool.query(sql, params);
   return data;
@@ -37,7 +32,7 @@ Category.update = async (category) => {
           SET
             category_name = ?,
             category_description = ?,
-            updated_at = ?
+            updated_at = NOW()
           WHERE
             category_id = ?
 	    `;
@@ -45,7 +40,6 @@ Category.update = async (category) => {
   const params = [
     category.category_name,
     category.category_description,
-    new Date(),
     category.category_id
   ];
 

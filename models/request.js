@@ -7,7 +7,7 @@ Request.create = async (request) => {
 					eb_requests (
 						economy_activity, workers_number, status, service_id, user_id, created_at, updated_at
 					)
-				VALUES (?, ?, ?, ?, ?, ?, ?)
+				VALUES (?, ?, ?, ?, ?, NOW(), NOW())
       `;
 
   const params = [
@@ -15,9 +15,7 @@ Request.create = async (request) => {
     request.workers_number,
     request.status,
     request.service_id,
-    request.user_id,
-    new Date(),
-    new Date()
+    request.user_id
   ];
 
   const data = pool.query(sql, params);
@@ -148,7 +146,7 @@ Request.update = async (request) => {
             user_id = ?,
             service_id = ?,
             status = ?,
-            updated_at = ?
+            updated_at = NOW()
           WHERE
             request_id = ?
 	    `;
@@ -157,7 +155,6 @@ Request.update = async (request) => {
     request.user_id,
     request.service_id,
     request.status,
-    new Date(),
     request.request_id
   ];
 

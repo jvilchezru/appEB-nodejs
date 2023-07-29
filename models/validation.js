@@ -7,7 +7,7 @@ Validation.create = async (validation) => {
 					eb_validations (
 						owner_name, folio_number, course_code, status, user_id, created_at, updated_at
 					)
-				VALUES (?, ?, ?, ?, ?, ?, ?)
+				VALUES (?, ?, ?, ?, ?, NOW(), NOW())
     	`;
 
   const params = [
@@ -15,9 +15,7 @@ Validation.create = async (validation) => {
     validation.folio_number,
     validation.course_code,
     validation.status,
-    validation.user_id,
-    new Date(),
-    new Date()
+    validation.user_id
   ];
 
   const data = pool.query(sql, params);
@@ -106,17 +104,12 @@ Validation.update = async (validation) => {
           SET
             user_id = ?,
             status = ?,
-            updated_at = ?
+            updated_at = NOW()
           WHERE
             validation_id = ?
 	    `;
 
-  const params = [
-    validation.user_id,
-    validation.status,
-    new Date(),
-    validation.validation_id
-  ];
+  const params = [validation.user_id, validation.status, validation.validation_id];
 
   const data = pool.query(sql, params);
   return data;
